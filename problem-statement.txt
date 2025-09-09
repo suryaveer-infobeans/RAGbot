@@ -1,0 +1,13 @@
+Create model which is work as an assitent for my custom database table schema to reply the generic answers from openai free model based on RAG model.
+
+Example workflow -> lets assume we have an employee database with schema (database/customGPT-schema.pdf) stored. Now if use asked a question to model that "give me the count how may employees who are from Australia?" then my model should create and a result and give that result to GPT and give the summiried answered on the bases of that result. 
+
+The data should be secure and the application should use RAG from my local not cloud but it can use openai API's.
+
+It should be chat based system which have chat history based on account and it will use MySql and Python flask.
+ 
+for frontend you can use Bootstart and javascript/jquery.
+
+output should look like professional assume you have 10 years of experience in development 
+
+also give me the documentaion in .md file with installation steps

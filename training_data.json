@@ -1,0 +1,72 @@
+[
+  {
+    "question": "list me employees from Marketing",
+    "sql": "SELECT\n  first_name,\n  last_name,\n  department\nFROM employees\nWHERE\n  department = 'Marketing';",
+    "answer": "The employees from the Marketing department are: Jason Gordon, Susan Martinez, Zachary Armstrong, Mason Mack, Alyssa Jackson, Margaret Morton, Brian Cook, Matthew Cruz, Peter Wilson, Denise Keller, Jacob Lawson, Philip Smith, Laura Kim, Rebecca Figueroa, April Roberts, Andrea Barrett, John Shaw, Lisa Osborne, Charles Perez, Andrea Lane, Jeremy Morris, Nathaniel Turner, Randy Singh, Jessica Chapman, and Kirsten Thompson.\n"
+  },
+  {
+    "question": "give me the count how may employees who are from Australia?",
+    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id)\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia';",
+    "answer": "There is 1 employee from Australia.\n"
+  },
+  {
+    "question": "tell me name of employee who is from India",
+    "sql": "SELECT e.first_name, e.last_name\nFROM employees e\nJOIN employee_addresses ea ON e.employee_id = ea.employee_id\nWHERE ea.country = 'India';",
+    "answer": "Rebekah Walker is from India.\n"
+  },
+  {
+    "question": "tell me name of employee who is from India",
+    "sql": "SELECT \nfirst_name,\nlast_name\nFROM \nemployees e\nJOIN \nemployee_addresses a ON e.employee_id = a.employee_id\nWHERE a.country = 'India';",
+    "answer": "Rebekah Walker is from India.\n"
+  },
+  {
+    "question": "give me the count how may employees who are from Australia?",
+    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id) AS employee_count\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia';",
+    "answer": "There is 1 employee from Australia.\n"
+  },
+  {
+    "question": "give me the count how may employees who are from Australia?",
+    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id)\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia';",
+    "answer": "There is 1 employee from Australia.\n"
+  },
+  {
+    "question": "name of that employee",
+    "sql": "SELECT\n  first_name,\n  last_name\nFROM employees;",
+    "answer": "Here are the names of the employees: Jason Gordon, Holly Schroeder, Susan Martinez, Zachary Armstrong, Aaron Parker, James Tate, Jessica Wallace, Danielle Castillo, Mindy Martin, John Scott, Melinda Hawkins, Justin Liu, Jason Richardson, Amber Tate, Paul Murphy, Justin Flores, Diamond Vazquez, Mason Mack, John Gardner, Wendy Brooks, Alyssa Jackson, Margaret Morton, Brian Cook, Melvin Hammond, Matthew Cruz, Peter Wilson, Michael Walker, Katherine Kaiser, Joanna Martinez, Shane Smith, Michael Rhodes, Denise Keller, Jacob Lawson, Mitchell Reynolds, Phillip Morris, Andrew Davis, Michael Johnson, Stephen Taylor, Philip Smith, Joshua Green, Robert Jones, Gina Burnett, Laura Kim, Rebecca Figueroa, April Roberts, Katherine Turner, Cristina Stark, Bobby Hancock, Alex Ryan, Heather Wilson, Allison Turner, Christopher James, Anthony Guerrero, Justin Wilson, Bridget Nielsen, Brandy Pierce, Andrea Barrett, Mary Johnson, Billy Brooks, John Shaw, Stephanie Sparks, Michael Rhodes, Lisa Osborne, Charles Perez, Judy Myers, Amanda Valentine, Andrea Lane, Rebekah Walker, Rodney Brooks, Kristy Merritt, Jacob Livingston, Angela Grant, Christopher Howe, Craig Parker, Maria Doyle, Tyler Bennett, Jeremy Morris, Julie Hill, Richard Mathews, Matthew Hall, Nathaniel Turner, Sharon Gill, Michael White, Andrea Williams, Lauren Perry, Tony Mckinney, Cheryl Woodward, Hailey Kelly, Kaitlyn Silva, Randy Singh, Travis Alvarado, Crystal Henderson, Christopher Jensen, Kenneth Lee, Melanie Silva, Jessica Chapman, Kirsten Thompson, James Benson, Ebony Cunningham, Ashley Contreras.\n"
+  },
+  {
+    "question": "Australian employee name",
+    "sql": "SELECT e.first_name, e.last_name\nFROM employees e\nJOIN employee_addresses ea ON e.employee_id = ea.employee_id\nWHERE ea.country = 'Australia';",
+    "answer": "Andrea Barrett\n"
+  },
+  {
+    "question": "give me the name again",
+    "sql": "SELECT first_name, last_name FROM employees;",
+    "answer": "Here are all the names: Jason Gordon, Holly Schroeder, Susan Martinez, Zachary Armstrong, Aaron Parker, James Tate, Jessica Wallace, Danielle Castillo, Mindy Martin, John Scott, Melinda Hawkins, Justin Liu, Jason Richardson, Amber Tate, Paul Murphy, Justin Flores, Diamond Vazquez, Mason Mack, John Gardner, Wendy Brooks, Alyssa Jackson, Margaret Morton, Brian Cook, Melvin Hammond, Matthew Cruz, Peter Wilson, Michael Walker, Katherine Kaiser, Joanna Martinez, Shane Smith, Michael Rhodes, Denise Keller, Jacob Lawson, Mitchell Reynolds, Phillip Morris, Andrew Davis, Michael Johnson, Stephen Taylor, Philip Smith, Joshua Green, Robert Jones, Gina Burnett, Laura Kim, Rebecca Figueroa, April Roberts, Katherine Turner, Cristina Stark, Bobby Hancock, Alex Ryan, Heather Wilson, Allison Turner, Christopher James, Anthony Guerrero, Justin Wilson, Bridget Nielsen, Brandy Pierce, Andrea Barrett, Mary Johnson, Billy Brooks, John Shaw, Stephanie Sparks, Michael Rhodes, Lisa Osborne, Charles Perez, Judy Myers, Amanda Valentine, Andrea Lane, Rebekah Walker, Rodney Brooks, Kristy Merritt, Jacob Livingston, Angela Grant, Christopher Howe, Craig Parker, Maria Doyle, Tyler Bennett, Jeremy Morris, Julie Hill, Richard Mathews, Matthew Hall, Nathaniel Turner, Sharon Gill, Michael White, Andrea Williams, Lauren Perry, Tony Mckinney, Cheryl Woodward, Hailey Kelly, Kaitlyn Silva, Randy Singh, Travis Alvarado, Crystal Henderson, Christopher Jensen, Kenneth Lee, Melanie Silva, Jessica Chapman, Kirsten Thompson, James Benson, Ebony Cunningham, and Ashley Contreras.\n"
+  },
+  {
+    "question": "list the names of all HR",
+    "sql": "SELECT first_name, last_name\nFROM employees\nWHERE department = 'HR';",
+    "answer": "The names of all HR employees are: James Tate, Melinda Hawkins, Wendy Brooks, Michael Walker, Joanna Martinez, Michael Johnson, Robert Jones, Katherine Turner, Bobby Hancock, Mary Johnson, Billy Brooks, Michael Rhodes, Judy Myers, Rebekah Walker, Craig Parker, Maria Doyle, Tyler Bennett, Michael White, Tony Mckinney, Cheryl Woodward, Hailey Kelly, Travis Alvarado, and Kenneth Lee.\n"
+  },
+  {
+    "question": "Hr who are salary is greater then 5000",
+    "sql": "SELECT first_name, last_name, department\nFROM employees\nWHERE salary > 5000;",
+    "answer": "The HR employees who earn more than 5000 are: James Tate, Melinda Hawkins, Wendy Brooks, Michael Walker, Joanna Martinez, Michael Johnson, Robert Jones, Katherine Turner, Bobby Hancock, Craig Parker, Maria Doyle, Tyler Bennett, Michael White, Tony Mckinney, Cheryl Woodward, Hailey Kelly, Travis Alvarado, Kenneth Lee, Judy Myers, Rebekah Walker, Billy Brooks, Mary Johnson, Michael Rhodes.\n"
+  },
+  {
+    "question": "emp names whos manage is James Tate",
+    "sql": "SELECT\n  e.first_name,\n  e.last_name\nFROM employees AS e\nWHERE\n  e.manager_id IN (\n    SELECT\n      employee_id\n    FROM employees\n    WHERE\n      first_name = 'James' AND last_name = 'Tate'\n  );",
+    "answer": "The employees who are managed by James Tate are Justin Liu, Philip Smith, Katherine Turner, Lisa Osborne, Amanda Valentine, and Randy Singh.\n"
+  },
+  {
+    "question": "list me employees from Marketing name start with M",
+    "sql": "SELECT\n  first_name,\n  last_name,\n  department\nFROM employees\nWHERE\n  department = 'Marketing' AND first_name LIKE 'M%';",
+    "answer": "The Marketing department has three employees whose first names start with M: Mason Mack, Margaret Morton, and Matthew Cruz.\n"
+  },
+  {
+    "question": "list the names of all HR whoes name end with s",
+    "sql": "SELECT first_name, last_name\nFROM employees\nWHERE department = 'HR' AND last_name LIKE '%s';",
+    "answer": "The HR employees whose last names end with 's' are: Melinda Hawkins, Wendy Brooks, Robert Jones, Billy Brooks, Michael Rhodes, and Judy Myers.\n"
+  }
+]

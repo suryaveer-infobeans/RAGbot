@@ -19,8 +19,8 @@ This project is a **Local Retrieval-Augmented Generation (RAG) Assistant** that 
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/suryaveer-infobeans/RAGbot.git
+cd RAGbot
 ```
 
 ### 2. Set Up Python Environment

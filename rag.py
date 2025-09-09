@@ -172,6 +172,14 @@ def build_prompt(question: str, sql_meta: dict) -> str:
         parts.append("SQL Result (rows):")
         parts.append(json.dumps(sql_meta["result"], indent=2))
     parts.append("Provide a short, clear answer based strictly on the SQL results.")
+    parts.append("If no results, say 'No data found.'")
+    parts.append("Do not make up information not in the results.")
+    parts.append("if there was an error executing the SQL, give a generic error message. 'No data found.'")
+    parts.append('if results is in list of dicts format, format the answer as a markdown in html table.')
+    parts.append("Use HTML <br> for line breaks if needed.")
+    parts.append("Do not use based on data from the database. or refer to the database.")
+    parts.append("Do not mention the SQL query or results in your answer.")
+    parts.append("Do not add ```html tags around the table.")
     return "\n\n".join(parts)
 
 # ------------------------

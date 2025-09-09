@@ -1,2 +1,110 @@
-body { background:#f7f7fb; }
-#messages div { background:#fff; padding:8px; border-radius:6px; }
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #e3e8f0);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Login Card */
+.login-card {
+  max-width: 400px;
+  border-radius: 16px;
+  background: #fff;
+  margin: 10% auto;
+}
+
+/* Chat Card */
+.chat-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+}
+
+/* Header */
+.chat-header {
+  background: linear-gradient(90deg, #49c2d1, #8fbbe9);
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Chat window */
+.chat-window {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fafafa;
+}
+
+/* Chat bubbles */
+div.msg {
+  padding: 12px 16px;
+  border-radius: 18px;
+  width: fit-content;
+  max-width: 70%;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  overflow: auto;
+}
+
+div.assistant {
+  background: #8fbbe9;
+  color: white;
+  margin-right: auto;
+}
+
+div.user-ask {
+  background: #49c2d1;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Input area */
+.chat-input-area {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.chat-input {
+  flex: 1;
+  border-radius: 20px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.chat-btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+/* Footer */
+.chat-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.typing-indicator {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 10px;
+}

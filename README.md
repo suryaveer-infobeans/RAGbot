@@ -1,4 +1,6 @@
-# Local RAG Assistant with Gemini (Flask + MySQL)
+# RAGbot — Ask Anything, Answered from Your Data.
+
+Local RAG Assistant with Gemini (Flask + MySQL)
 
 ## Overview
 

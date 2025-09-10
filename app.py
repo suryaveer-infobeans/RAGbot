@@ -65,9 +65,13 @@ def login():
 @app.route('/chat')
 @login_required_page
 def chat_page():
-    """Chat UI page"""
-    return render_template("chat.html")
-
+    """Chat UI page — pass username so the template can show welcome on load."""
+    user_id = session.get("user_id")
+    user = None
+    if user_id:
+        user = User.query.get(user_id)
+    username = user.username if user else ""
+    return render_template("chat.html", username=username)
 
 # -----------------------------
 # API endpoints
@@ -88,7 +92,8 @@ def register_user():
     db.session.commit()
     session['user_id'] = user.id
     return jsonify({'message': 'Registered successfully',
-                    'user': {'id': user.id, 'username': user.username}})
+                    'user': {'id': user.id, 'username': user.username},
+                    'is_new': True})
 
 @app.route('/api/login', methods=['POST'])
 def login_user():
@@ -100,7 +105,8 @@ def login_user():
 
     session['user_id'] = user.id
     return jsonify({'message': 'Logged in',
-                    'user': {'id': user.id, 'username': user.username}})
+                    'user': {'id': user.id, 'username': user.username},
+                    'is_new': False})
 
 @app.route('/api/logout', methods=['POST'])
 def logout_user():

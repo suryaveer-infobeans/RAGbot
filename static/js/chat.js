@@ -1,4 +1,5 @@
 $(function () {
+ 
   // ----------------------------
   // Handle login/register
   // ----------------------------
@@ -12,7 +13,11 @@ $(function () {
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ username }),
-      success: function () {
+      success: function (res) {
+        sessionStorage.setItem("welcomeMsg", res.is_new
+            ? "👋 Welcome " + res.user.username + "!"
+            : "👋 Welcome back " + res.user.username + "!"
+          );
         window.location.href = "/chat";
       },
       error: function () {
@@ -22,14 +27,20 @@ $(function () {
           method: "POST",
           contentType: "application/json",
           data: JSON.stringify({ username }),
-          success: function () {
+          success: function (res) {
+            sessionStorage.setItem("welcomeMsg", res.is_new
+            ? "👋 Welcome " + res.user.username + "!"
+            : "👋 Welcome back " + res.user.username + "!"
+          );
             window.location.href = "/chat";
           },
           error: function (err) {
-            alert("Login failed: " + (err.responseJSON?.error || err.statusText));
-          }
+            alert(
+              "Login failed: " + (err.responseJSON?.error || err.statusText)
+            );
+          },
         });
-      }
+      },
     });
   });
 
@@ -54,8 +65,11 @@ $(function () {
         appendMessage("assistant", res.reply);
       },
       error: function (err) {
-        appendMessage("assistant", "⚠️ Error: " + (err.responseJSON?.error || err.statusText));
-      }
+        appendMessage(
+          "assistant",
+          "⚠️ Error: " + (err.responseJSON?.error || err.statusText)
+        );
+      },
     });
   });
 
@@ -77,5 +91,11 @@ $(function () {
     );
     $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
     $("#typingIndicator").hide();
+  }
+
+  const msg = sessionStorage.getItem("welcomeMsg");
+  if (msg) {
+    appendMessage("assistant", msg);
+    sessionStorage.removeItem("welcomeMsg"); // clear after showing
   }
 });

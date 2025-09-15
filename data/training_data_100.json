@@ -11,23 +11,8 @@
   },
   {
     "question": "tell me name of employee who is from India",
-    "sql": "SELECT e.first_name, e.last_name\nFROM employees e\nJOIN employee_addresses ea ON e.employee_id = ea.employee_id\nWHERE ea.country = 'India';",
-    "answer": "Rebekah Walker is from India.\n"
-  },
-  {
-    "question": "tell me name of employee who is from India",
     "sql": "SELECT \nfirst_name,\nlast_name\nFROM \nemployees e\nJOIN \nemployee_addresses a ON e.employee_id = a.employee_id\nWHERE a.country = 'India';",
     "answer": "Rebekah Walker is from India.\n"
-  },
-  {
-    "question": "give me the count how may employees who are from Australia?",
-    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id) AS employee_count\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia';",
-    "answer": "There is 1 employee from Australia.\n"
-  },
-  {
-    "question": "give me the count how may employees who are from Australia?",
-    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id)\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia';",
-    "answer": "There is 1 employee from Australia.\n"
   },
   {
     "question": "name of that employee",
@@ -108,5 +93,329 @@
     "question": "Now give all name other then HR",
     "sql": "SELECT first_name, last_name, department\nFROM employees\nWHERE department <> 'HR';",
     "answer": "<table>\n<thead>\n<tr>\n<th>first_name</th>\n<th>last_name</th>\n<th>department</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Jason</td>\n<td>Gordon</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Holly</td>\n<td>Schroeder</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Susan</td>\n<td>Martinez</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Zachary</td>\n<td>Armstrong</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Aaron</td>\n<td>Parker</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Jessica</td>\n<td>Wallace</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Danielle</td>\n<td>Castillo</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Mindy</td>\n<td>Martin</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>John</td>\n<td>Scott</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Justin</td>\n<td>Liu</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Jason</td>\n<td>Richardson</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Amber</td>\n<td>Tate</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Paul</td>\n<td>Murphy</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Justin</td>\n<td>Flores</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Diamond</td>\n<td>Vazquez</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Mason</td>\n<td>Mack</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>John</td>\n<td>Gardner</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Alyssa</td>\n<td>Jackson</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Margaret</td>\n<td>Morton</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Brian</td>\n<td>Cook</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Melvin</td>\n<td>Hammond</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Matthew</td>\n<td>Cruz</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Peter</td>\n<td>Wilson</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Katherine</td>\n<td>Kaiser</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Shane</td>\n<td>Smith</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Michael</td>\n<td>Rhodes</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Denise</td>\n<td>Keller</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Jacob</td>\n<td>Lawson</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Mitchell</td>\n<td>Reynolds</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Phillip</td>\n<td>Morris</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Andrew</td>\n<td>Davis</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Stephen</td>\n<td>Taylor</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Philip</td>\n<td>Smith</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Joshua</td>\n<td>Green</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Gina</td>\n<td>Burnett</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Laura</td>\n<td>Kim</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Rebecca</td>\n<td>Figueroa</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>April</td>\n<td>Roberts</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Cristina</td>\n<td>Stark</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Alex</td>\n<td>Ryan</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Heather</td>\n<td>Wilson</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Allison</td>\n<td>Turner</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Christopher</td>\n<td>James</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Anthony</td>\n<td>Guerrero</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Justin</td>\n<td>Wilson</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Bridget</td>\n<td>Nielsen</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Brandy</td>\n<td>Pierce</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Andrea</td>\n<td>Barrett</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>John</td>\n<td>Shaw</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Stephanie</td>\n<td>Sparks</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Lisa</td>\n<td>Osborne</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Charles</td>\n<td>Perez</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Amanda</td>\n<td>Valentine</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Andrea</td>\n<td>Lane</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Rodney</td>\n<td>Brooks</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Kristy</td>\n<td>Merritt</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Jacob</td>\n<td>Livingston</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Angela</td>\n<td>Grant</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Christopher</td>\n<td>Howe</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Jeremy</td>\n<td>Morris</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Julie</td>\n<td>Hill</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Richard</td>\n<td>Mathews</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Matthew</td>\n<td>Hall</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Nathaniel</td>\n<td>Turner</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Sharon</td>\n<td>Gill</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Andrea</td>\n<td>Williams</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Lauren</td>\n<td>Perry</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Kaitlyn</td>\n<td>Silva</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Randy</td>\n<td>Singh</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Crystal</td>\n<td>Henderson</td>\n<td>Finance</td>\n</tr>\n<tr>\n<td>Christopher</td>\n<td>Jensen</td>\n<td>IT</td>\n</tr>\n<tr>\n<td>Melanie</td>\n<td>Silva</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Jessica</td>\n<td>Chapman</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>Kirsten</td>\n<td>Thompson</td>\n<td>Marketing</td>\n</tr>\n<tr>\n<td>James</td>\n<td>Benson</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Ebony</td>\n<td>Cunningham</td>\n<td>Operations</td>\n</tr>\n<tr>\n<td>Ashley</td>\n<td>Contreras</td>\n<td>Finance</td>\n</tr>\n</tbody>\n</table>\n"
+  },
+  {
+    "question": "List all employees' first and last names",
+    "sql": "SELECT first_name, last_name FROM employees;"
+  },
+  {
+    "question": "Give me all unique job titles",
+    "sql": "SELECT DISTINCT job_title FROM employees;"
+  },
+  {
+    "question": "Show employees who work in the HR department",
+    "sql": "SELECT first_name, last_name FROM employees WHERE department = 'HR';"
+  },
+  {
+    "question": "Get the count of employees in each department",
+    "sql": "SELECT department, COUNT(*) AS cnt FROM employees GROUP BY department;"
+  },
+  {
+    "question": "What is the average salary of employees in Marketing?",
+    "sql": "SELECT AVG(salary) AS avg_salary FROM employees WHERE department = 'Marketing';"
+  },
+  {
+    "question": "List employees who live in Australia",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE ea.country = 'Australia';"
+  },
+  {
+    "question": "Show all distinct cities where HR employees live",
+    "sql": "SELECT DISTINCT ea.city FROM employee_addresses ea JOIN employees e ON ea.employee_id = e.employee_id WHERE e.department = 'HR';"
+  },
+  {
+    "question": "Get the total salary by department",
+    "sql": "SELECT department, SUM(salary) AS total_salary FROM employees GROUP BY department;"
+  },
+  {
+    "question": "Find the top 5 highest paid employees",
+    "sql": "SELECT first_name, last_name, salary FROM employees ORDER BY salary DESC LIMIT 5;"
+  },
+  {
+    "question": "List employees with their project names",
+    "sql": "SELECT e.first_name, e.last_name, ep.project_name FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id;"
+  },
+  {
+    "question": "Count how many employees are assigned to each project",
+    "sql": "SELECT ep.project_name, COUNT(ep.employee_id) AS employee_count FROM employee_projects ep GROUP BY ep.project_name;"
+  },
+  {
+    "question": "List all managers and their direct reports",
+    "sql": "SELECT m.first_name AS manager_first_name, m.last_name AS manager_last_name, e.first_name AS employee_first_name, e.last_name AS employee_last_name FROM employees e JOIN employees m ON e.manager_id = m.employee_id;"
+  },
+  {
+    "question": "Find employees who do not have a manager",
+    "sql": "SELECT first_name, last_name FROM employees WHERE manager_id IS NULL;"
+  },
+  {
+    "question": "Get employees and their office addresses",
+    "sql": "SELECT e.first_name, e.last_name, ea.street, ea.city FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE ea.address_type = 'Office';"
+  },
+  {
+    "question": "Find all employees working on projects that started after 2023-01-01",
+    "sql": "SELECT e.first_name, e.last_name, ep.project_name FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id WHERE ep.start_date > '2023-01-01';"
+  },
+  {
+    "question": "Which employees are not assigned to any project?",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e LEFT JOIN employee_projects ep ON e.employee_id = ep.employee_id WHERE ep.project_id IS NULL;"
+  },
+  {
+    "question": "Get employees who earn more than their manager",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employees m ON e.manager_id = m.employee_id WHERE e.salary > m.salary;"
+  },
+  {
+    "question": "List departments with average salary above 80000",
+    "sql": "SELECT department, AVG(salary) AS avg_salary FROM employees GROUP BY department HAVING AVG(salary) > 80000;"
+  },
+  {
+    "question": "Find employees working in more than one project",
+    "sql": "SELECT e.first_name, e.last_name, COUNT(ep.project_id) AS project_count FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id GROUP BY e.employee_id HAVING COUNT(ep.project_id) > 1;"
+  },
+  {
+    "question": "Get the most recent hires in each department",
+    "sql": "SELECT e1.department, e1.first_name, e1.last_name, e1.hire_date FROM employees e1 WHERE e1.hire_date = (SELECT MAX(e2.hire_date) FROM employees e2 WHERE e1.department = e2.department);"
+  },
+  {
+    "question": "List all employees along with their city and country",
+    "sql": "SELECT e.first_name, e.last_name, ea.city, ea.country FROM employees e LEFT JOIN employee_addresses ea ON e.employee_id = ea.employee_id;"
+  },
+  {
+    "question": "Show the number of employees per country",
+    "sql": "SELECT ea.country, COUNT(e.employee_id) AS cnt FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id GROUP BY ea.country;"
+  },
+  {
+    "question": "Find employees who joined before their manager",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employees m ON e.manager_id = m.employee_id WHERE e.hire_date < m.hire_date;"
+  },
+  {
+    "question": "Find the second highest salary in the company",
+    "sql": "SELECT MAX(salary) AS second_highest_salary FROM employees WHERE salary < (SELECT MAX(salary) FROM employees);"
+  },
+  {
+    "question": "Get the top 3 highest salaries in each department",
+    "sql": "SELECT department, first_name, last_name, salary FROM ( SELECT department, first_name, last_name, salary, ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rn FROM employees ) ranked WHERE rn <= 3;"
+  },
+  {
+    "question": "List employees who earn more than the average salary of their department",
+    "sql": "SELECT e.first_name, e.last_name, e.department, e.salary FROM employees e JOIN (SELECT department, AVG(salary) AS dept_avg FROM employees GROUP BY department) d ON e.department = d.department WHERE e.salary > d.dept_avg;"
+  },
+  {
+    "question": "Find the project with the maximum number of employees assigned",
+    "sql": "SELECT ep.project_name FROM employee_projects ep GROUP BY ep.project_name ORDER BY COUNT(ep.employee_id) DESC LIMIT 1;"
+  },
+  {
+    "question": "Get the highest paid employee in each city",
+    "sql": "SELECT ea.city, e.first_name, e.last_name, e.salary FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE e.salary = (SELECT MAX(e2.salary) FROM employees e2 JOIN employee_addresses ea2 ON e2.employee_id = ea2.employee_id WHERE ea2.city = ea.city);"
+  },
+  {
+    "question": "Show all managers who manage more than 5 employees",
+    "sql": "SELECT m.first_name, m.last_name, COUNT(e.employee_id) AS report_count FROM employees m JOIN employees e ON m.employee_id = e.manager_id GROUP BY m.employee_id HAVING COUNT(e.employee_id) > 5;"
+  },
+  {
+    "question": "Find employees who live in the same city as their manager",
+    "sql": "SELECT e.first_name, e.last_name, ea.city FROM employees e JOIN employees m ON e.manager_id = m.employee_id JOIN employee_addresses ea ON e.employee_id = ea.employee_id JOIN employee_addresses ma ON m.employee_id = ma.employee_id WHERE ea.city = ma.city;"
+  },
+  {
+    "question": "List employees who are the only person in their department",
+    "sql": "SELECT e.first_name, e.last_name, e.department FROM employees e WHERE (SELECT COUNT(*) FROM employees e2 WHERE e2.department = e.department) = 1;"
+  },
+  {
+    "question": "Find projects that have employees from more than one department",
+    "sql": "SELECT ep.project_name FROM employee_projects ep JOIN employees e ON ep.employee_id = e.employee_id GROUP BY ep.project_name HAVING COUNT(DISTINCT e.department) > 1;"
+  },
+  {
+    "question": "Get the latest project assigned to each employee",
+    "sql": "SELECT ep.employee_id, ep.project_name, ep.start_date FROM employee_projects ep WHERE ep.start_date = (SELECT MAX(ep2.start_date) FROM employee_projects ep2 WHERE ep2.employee_id = ep.employee_id);"
+  },
+  {
+    "question": "Show the cumulative salary cost per department ordered by hire date",
+    "sql": "SELECT department, first_name, last_name, hire_date, SUM(salary) OVER (PARTITION BY department ORDER BY hire_date ROWS UNBOUNDED PRECEDING) AS cumulative_salary FROM employees;"
+  },
+  {
+    "question": "Find employees who never worked on any project but earn above company average salary",
+    "sql": "SELECT e.first_name, e.last_name, e.salary FROM employees e LEFT JOIN employee_projects ep ON e.employee_id = ep.employee_id WHERE ep.project_id IS NULL AND e.salary > (SELECT AVG(salary) FROM employees);"
+  },
+  {
+    "question": "Which department has the highest average salary?",
+    "sql": "SELECT department FROM employees GROUP BY department ORDER BY AVG(salary) DESC LIMIT 1;"
+  },
+  {
+    "question": "List employees who joined in the same year as their manager",
+    "sql": "SELECT e.first_name, e.last_name, YEAR(e.hire_date) AS employee_year, YEAR(m.hire_date) AS manager_year FROM employees e JOIN employees m ON e.manager_id = m.employee_id WHERE YEAR(e.hire_date) = YEAR(m.hire_date);"
+  },
+  {
+    "question": "Find employees who are working on all projects their manager is also working on",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employees m ON e.manager_id = m.employee_id WHERE NOT EXISTS (SELECT 1 FROM employee_projects mp WHERE mp.employee_id = m.employee_id AND mp.project_id NOT IN (SELECT ep.project_id FROM employee_projects ep WHERE ep.employee_id = e.employee_id));"
+  },
+  {
+    "question": "Get the average number of projects per employee by department",
+    "sql": "SELECT e.department, AVG(project_count) AS avg_projects FROM (SELECT e.department, e.employee_id, COUNT(ep.project_id) AS project_count FROM employees e LEFT JOIN employee_projects ep ON e.employee_id = ep.employee_id GROUP BY e.employee_id, e.department) t GROUP BY t.department;"
+  },
+  {
+    "question": "List employees who live in cities where no Marketing employees live",
+    "sql": "SELECT DISTINCT e.first_name, e.last_name, ea.city FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE ea.city NOT IN (SELECT ea2.city FROM employees e2 JOIN employee_addresses ea2 ON e2.employee_id = ea2.employee_id WHERE e2.department = 'Marketing');"
+  },
+  {
+    "question": "Find the ratio of employees to managers in each department",
+    "sql": "SELECT department, COUNT(employee_id) / COUNT(DISTINCT manager_id) AS ratio FROM employees GROUP BY department;"
+  },
+  {
+    "question": "List employees who have the same last name as any other employee in the company",
+    "sql": "SELECT e1.first_name, e1.last_name FROM employees e1 WHERE EXISTS (SELECT 1 FROM employees e2 WHERE e1.last_name = e2.last_name AND e1.employee_id <> e2.employee_id);"
+  },
+  {
+    "question": "List the 5 most recently hired employees with their hire date",
+    "sql": "SELECT first_name, last_name, hire_date FROM employees ORDER BY hire_date DESC LIMIT 5;"
+  },
+  {
+    "question": "Find the department with the lowest total salary",
+    "sql": "SELECT department FROM employees GROUP BY department ORDER BY SUM(salary) ASC LIMIT 1;"
+  },
+  {
+    "question": "Show the count of employees hired each year",
+    "sql": "SELECT YEAR(hire_date) AS year, COUNT(*) AS hires FROM employees GROUP BY YEAR(hire_date) ORDER BY year;"
+  },
+  {
+    "question": "Get employees who have both 'Home' and 'Office' addresses",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employee_addresses ea1 ON e.employee_id = ea1.employee_id AND ea1.address_type = 'Home' JOIN employee_addresses ea2 ON e.employee_id = ea2.employee_id AND ea2.address_type = 'Office';"
+  },
+  {
+    "question": "List employees working on the longest running project",
+    "sql": "SELECT e.first_name, e.last_name, ep.project_name FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id WHERE ep.project_id = (SELECT project_id FROM employee_projects ORDER BY DATEDIFF(IFNULL(end_date, CURDATE()), start_date) DESC LIMIT 1);"
+  },
+  {
+    "question": "Get employees with salary above the global average and living in the United States",
+    "sql": "SELECT e.first_name, e.last_name, e.salary FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE e.salary > (SELECT AVG(salary) FROM employees) AND ea.country = 'United States';"
+  },
+  {
+    "question": "Find managers who earn less than at least one of their direct reports",
+    "sql": "SELECT m.first_name, m.last_name FROM employees m JOIN employees e ON e.manager_id = m.employee_id WHERE m.salary < e.salary;"
+  },
+  {
+    "question": "Which employees work in the same project as 'Michael Johnson'?",
+    "sql": "SELECT DISTINCT e.first_name, e.last_name FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id WHERE ep.project_id IN (SELECT ep2.project_id FROM employee_projects ep2 JOIN employees e2 ON ep2.employee_id = e2.employee_id WHERE e2.first_name = 'Michael' AND e2.last_name = 'Johnson');"
+  },
+  {
+    "question": "Get the average salary of employees by city",
+    "sql": "SELECT ea.city, AVG(e.salary) AS avg_salary FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id GROUP BY ea.city;"
+  },
+  {
+    "question": "List the first and last names concatenated as full_name for all employees",
+    "sql": "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM employees;"
+  },
+  {
+    "question": "list me employees from Marketing (variant)",
+    "sql": "SELECT\n  first_name,\n  last_name,\n  department\nFROM employees\nWHERE\n  department = 'Marketing' -- variant;"
+  },
+  {
+    "question": "give me the count how may employees who are from Australia? (variant)",
+    "sql": "SELECT\n  COUNT(DISTINCT T1.employee_id)\nFROM employees AS T1\nINNER JOIN employee_addresses AS T2\n  ON T1.employee_id = T2.employee_id\nWHERE\n  T2.country = 'Australia' -- variant;"
+  },
+  {
+    "question": "tell me name of employee who is from India (variant)",
+    "sql": "SELECT \nfirst_name,\nlast_name\nFROM \nemployees e\nJOIN \nemployee_addresses a ON e.employee_id = a.employee_id\nWHERE a.country = 'India' -- variant;"
+  },
+  {
+    "question": "name of that employee (variant)",
+    "sql": "SELECT\n  first_name,\n  last_name\nFROM employees -- variant;"
+  },
+  {
+    "question": "Australian employee name (variant)",
+    "sql": "SELECT e.first_name, e.last_name\nFROM employees e\nJOIN employee_addresses ea ON e.employee_id = ea.employee_id\nWHERE ea.country = 'Australia' -- variant;"
+  },
+  {
+    "question": "give me the name again (variant)",
+    "sql": "SELECT first_name, last_name FROM employees -- variant;"
+  },
+  {
+    "question": "list the names of all HR (variant)",
+    "sql": "SELECT first_name, last_name\nFROM employees\nWHERE department = 'HR' -- variant;"
+  },
+  {
+    "question": "Hr who are salary is greater then 5000 (variant)",
+    "sql": "SELECT first_name, last_name, department\nFROM employees\nWHERE salary > 5000 -- variant;"
+  },
+  {
+    "question": "emp names whos manage is James Tate (variant)",
+    "sql": "SELECT\n  e.first_name,\n  e.last_name\nFROM employees AS e\nWHERE\n  e.manager_id IN (\n    SELECT\n      employee_id\n    FROM employees\n    WHERE\n      first_name = 'James' AND last_name = 'Tate'\n  ) -- variant;"
+  },
+  {
+    "question": "list me employees from Marketing name start with M (variant)",
+    "sql": "SELECT\n  first_name,\n  last_name,\n  department\nFROM employees\nWHERE\n  department = 'Marketing' AND first_name LIKE 'M%' -- variant;"
+  },
+  {
+    "question": "list the names of all HR whoes name end with s (variant)",
+    "sql": "SELECT first_name, last_name\nFROM employees\nWHERE department = 'HR' AND last_name LIKE '%s' -- variant;"
+  },
+  {
+    "question": "list me employees from Marketing in ascending order by name (variant)",
+    "sql": "SELECT\n  first_name,\n  last_name,\n  department\nFROM employees\nWHERE\n  department = 'Marketing'\nORDER BY\n  first_name,\n  last_name -- variant;"
+  },
+  {
+    "question": "list me employees from Marketing in ascending order by name with emp id and address (variant)",
+    "sql": "SELECT\n  e.employee_id,\n  e.first_name,\n  e.last_name,\n  ea.street,\n  ea.city,\n  ea.state,\n  ea.postal_code,\n  ea.country\nFROM employees AS e\nLEFT JOIN employee_addresses AS ea\n  ON e.employee_id = ea.employee_id\nWHERE\n  e.department = 'Marketing'\nORDER BY\n  e.first_name ASC,\n  e.last_name ASC -- variant;"
+  },
+  {
+    "question": "list the names of all HR whoes first name end with s (variant)",
+    "sql": "SELECT first_name, last_name\nFROM employees\nWHERE department = 'HR' AND first_name LIKE '%s' -- variant;"
+  },
+  {
+    "question": "give me all employee address whos name is james (variant)",
+    "sql": "SELECT\n  ea.*\nFROM employee_addresses AS ea\nJOIN employees AS e\n  ON ea.employee_id = e.employee_id\nWHERE\n  e.first_name = 'James' -- variant;"
+  },
+  {
+    "question": "give me all countries name (variant)",
+    "sql": "SELECT DISTINCT country FROM employee_addresses -- variant;"
+  },
+  {
+    "question": "how many employees are in Hercules project (variant)",
+    "sql": "SELECT\n  COUNT(DISTINCT ep.employee_id) AS num_employees\nFROM employee_projects AS ep\nWHERE\n  ep.project_name = 'Hercules' -- variant;"
+  },
+  {
+    "question": "give me full name of all the employees who are working with Apollo project and live in Delaware state (variant)",
+    "sql": "SELECT\n  e.first_name,\n  e.last_name\nFROM employees AS e\nJOIN employee_projects AS ep\n  ON e.employee_id = ep.employee_id\nJOIN employee_addresses AS ea\n  ON e.employee_id = ea.employee_id\nWHERE\n  ep.project_name = 'Apollo' AND ea.state = 'Delaware' -- variant;"
+  },
+  {
+    "question": "Now give all name other then HR (variant)",
+    "sql": "SELECT first_name, last_name, department\nFROM employees\nWHERE department <> 'HR' -- variant;"
+  },
+  {
+    "question": "List all employees' first and last names (variant)",
+    "sql": "SELECT first_name, last_name FROM employees -- variant;"
+  },
+  {
+    "question": "Give me all unique job titles (variant)",
+    "sql": "SELECT DISTINCT job_title FROM employees -- variant;"
+  },
+  {
+    "question": "Show employees who work in the HR department (variant)",
+    "sql": "SELECT first_name, last_name FROM employees WHERE department = 'HR' -- variant;"
+  },
+  {
+    "question": "Get the count of employees in each department (variant)",
+    "sql": "SELECT department, COUNT(*) AS cnt FROM employees GROUP BY department -- variant;"
+  },
+  {
+    "question": "What is the average salary of employees in Marketing? (variant)",
+    "sql": "SELECT AVG(salary) AS avg_salary FROM employees WHERE department = 'Marketing' -- variant;"
+  },
+  {
+    "question": "List employees who live in Australia (variant)",
+    "sql": "SELECT e.first_name, e.last_name FROM employees e JOIN employee_addresses ea ON e.employee_id = ea.employee_id WHERE ea.country = 'Australia' -- variant;"
+  },
+  {
+    "question": "Show all distinct cities where HR employees live (variant)",
+    "sql": "SELECT DISTINCT ea.city FROM employee_addresses ea JOIN employees e ON ea.employee_id = e.employee_id WHERE e.department = 'HR' -- variant;"
+  },
+  {
+    "question": "Get the total salary by department (variant)",
+    "sql": "SELECT department, SUM(salary) AS total_salary FROM employees GROUP BY department -- variant;"
+  },
+  {
+    "question": "Find the top 5 highest paid employees (variant)",
+    "sql": "SELECT first_name, last_name, salary FROM employees ORDER BY salary DESC LIMIT 5 -- variant;"
+  },
+  {
+    "question": "List employees with their project names (variant)",
+    "sql": "SELECT e.first_name, e.last_name, ep.project_name FROM employees e JOIN employee_projects ep ON e.employee_id = ep.employee_id -- variant;"
   }
 ]

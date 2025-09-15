@@ -11,3 +11,6 @@ for frontend you can use Bootstart and javascript/jquery.
 output should look like professional assume you have 10 years of experience in development 
 
 also give me the documentaion in .md file with installation steps
+
+
+openai api fine_tuning.jobs.retrieve -i ftjob-Mw78tbXJrrCown3WBBCB32fD

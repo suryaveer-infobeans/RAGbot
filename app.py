@@ -73,6 +73,7 @@ def chat_page():
     username = user.username if user else ""
     return render_template("chat.html", username=username)
 
+
 # -----------------------------
 # API endpoints
 # -----------------------------
@@ -154,8 +155,9 @@ def chat():
     db.session.add(user_msg)
     db.session.commit()
 
-    # RAG answer
+    # RAG answer (using fine-tuned OpenAI model in rag.py)
     try:
+        print(f"User question: {text}")
         assistant_text, meta = answer_question(text)
     except Exception as e:
         assistant_text = f"Error processing question: {e}"
@@ -164,6 +166,7 @@ def chat():
     # Save assistant message
     bot_msg = Message(conversation_id=conversation.id, sender='assistant',
                       text=assistant_text, meta=json.dumps(meta))
+    print(f"Assistant reply: {assistant_text}")
     db.session.add(bot_msg)
     db.session.commit()
 

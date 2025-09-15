@@ -1,7 +1,5 @@
 # RAGbot — Ask Anything, Answered from Your Data.
 
-Local RAG Assistant with Gemini (Flask + MySQL)
-
 ## Overview
 
 RAGbot is a **Retrieval-Augmented Generation (RAG) assistant** built with **Flask, FAISS, and OpenAI GPT**. It allows users to ask natural language questions about a database, retrieves relevant schema/document context, generates **validated SQL queries**, and summarizes results into user-friendly answers.  

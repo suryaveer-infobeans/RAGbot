@@ -55,3 +55,6 @@ Thumbs.db
 
 # version file with same name
 *.version
+
+# Ignore zip files
+*.zip

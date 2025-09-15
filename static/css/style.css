@@ -69,7 +69,13 @@ div.user-ask {
   background: #49c2d1;
   color: white;
   margin-left: auto;
-  text-align: right;
+  
+}
+div.assistant table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  min-width: 300px;
 }
 
 /* Input area */

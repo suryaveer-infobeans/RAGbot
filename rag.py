@@ -1,20 +1,27 @@
-import os, json, requests, re, joblib
+import os
+import json
+import re
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text as sql_text
-from sklearn.feature_extraction.text import TfidfVectorizer
+from openai import OpenAI
+from retriever import retrieve
+from sql_validator import validate_sql
+from decimal import Decimal
 
-
+# ------------------------
+# Load ENV + init
+# ------------------------
 load_dotenv()
-
-# ------------------------
-# Globals
-# ------------------------
 _ENGINE = None
-VEC = None
-CLF = None
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Model IDs
+BASE_MODEL = "gpt-4.1-nano-2025-04-14"
+FINE_TUNED_MODEL = os.getenv("OPENAI_FINE_TUNED_MODEL")
+
 
 # ------------------------
-# DB Connection
+# DB connection
 # ------------------------
 def get_engine():
     global _ENGINE
@@ -25,88 +32,63 @@ def get_engine():
         _ENGINE = create_engine(dburi)
     return _ENGINE
 
-# ------------------------
-# Gemini API helper
-# ------------------------
-def call_gemini_system(prompt: str) -> str:
-    api_url = os.getenv("GEMINI_API_URL")
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_url or not api_key:
-        raise RuntimeError("GEMINI_API_URL or GEMINI_API_KEY not set")
-
-    url = f"{api_url}?key={api_key}"
-    payload = {"contents": [{"parts": [{"text": prompt}]}]}
-    headers = {"Content-Type": "application/json"}
-    resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
-
-    if resp.status_code != 200:
-        raise RuntimeError(f"LLM API error: {resp.status_code} {resp.text}")
-
-    data = resp.json()
-    try:
-        return data["candidates"][0]["content"]["parts"][0]["text"]
-    except (KeyError, IndexError):
-        return json.dumps(data)
 
 # ------------------------
-# Load schema from .txt file
+# Generate SQL with RAG
 # ------------------------
-def load_full_schema(path="database/schema.txt"):
-    with open(path, "r", encoding="utf-8") as f:
-        return f.read()
+def generate_sql_with_openai(question: str) -> str:
+    """Generate SQL using fine-tuned model + retrieved schema context."""
+    context_docs = retrieve(question, k=10)
 
-FULL_SCHEMA = load_full_schema()
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are an expert MySQL assistant. "
+                "Generate ONLY valid SQL based on schema and examples below. "
+                "Rules:\n"
+                "- If the question asks for names, include first_name and last_name.\n"
+                "- If the question asks for departments, include the department column.\n"
+                "- Never return just COUNT(*) unless explicitly asked for a count.\n"
+                "- Always alias aggregates clearly, e.g. COUNT(*) AS cnt.\n"
+                "- If the query is unanswerable with schema, return SELECT * FROM employees WHERE 1=0.\n"
+                "- Use correct table and column names from schema.\n"
+            )
+        },
+        {"role": "system", "content": "\n\n".join(context_docs)},
+        {"role": "user", "content": question},
+    ]
 
-# ------------------------
-# Local Model Loader
-# ------------------------
-def load_local_model():
-    global VEC, CLF
-    try:
-        VEC = joblib.load("models/vectorizer.pkl")
-        CLF = joblib.load("models/sql_model.pkl")
-        print("✅ Local SQL model loaded.")
-    except Exception:
-        VEC, CLF = None, None
-        print("⚠️ No local SQL model found, will fallback to Gemini.")
+    print  ("❗ Prompt to OpenAI:")
+    for m in messages:
+        role = m["role"]
+        content = m["content"]
+        print(f"[{role}]: {content}\n")
+    
+    model_id = FINE_TUNED_MODEL or BASE_MODEL
+    resp = client.chat.completions.create(model=model_id, messages=messages, temperature=0)
+    raw_sql = resp.choices[0].message.content.strip()
 
-load_local_model()
+    print(f"✅ Raw SQL from OpenAI: {raw_sql}")
+    # Clean SQL (remove markdown formatting if present)
+    sql = re.sub(r"^```(sql)?\n", "", raw_sql, flags=re.IGNORECASE)
+    sql = re.sub(r"\n```$", "", sql).strip()
 
-def predict_sql_local(question: str):
-    if not VEC or not CLF:
-        return None, 0.0
-    X_vec = VEC.transform([question])
-    proba = CLF.predict_proba(X_vec).max()
-    sql = CLF.predict(X_vec)[0]
-    return sql, proba
+    # Validate & repair if needed
+    valid, errors = validate_sql(sql)
+    if not valid:
+        fix_prompt = [
+            {"role": "system", "content": f"Fix this SQL query. Issues: {'; '.join(errors)}"},
+            {"role": "user", "content": sql},
+        ]
+        resp2 = client.chat.completions.create(model=model_id, messages=fix_prompt, temperature=0)
+        sql = resp2.choices[0].message.content.strip()
+        sql = re.sub(r"^```(sql)?\n", "", sql, flags=re.IGNORECASE)
+        sql = re.sub(r"\n```$", "", sql).strip()
 
-# ------------------------
-# SQL Generator (Gemini)
-# ------------------------
-def generate_sql_with_gemini(question: str) -> str:
-    prompt = f"""
-You are an expert MySQL assistant. Based ONLY on the following schema, 
-write a valid SQL query to answer the user's question.
-
-Schema:
-{FULL_SCHEMA}
-
-Question: {question}
-
-Rules:
-- If the question asks for "names", include first_name and last_name.
-- If the question asks for departments, include the department column.
-- Never return just COUNT(*) unless explicitly asked for a count.
-- Always alias aggregates clearly, e.g. COUNT(*) AS cnt.
-- Return ONLY the SQL query (no explanations, no markdown).
-"""
-    raw_sql = call_gemini_system(prompt)
-    sql = raw_sql.strip()
-    sql = re.sub(r"^```.*?\n", "", sql, flags=re.DOTALL)
-    sql = re.sub(r"\n```$", "", sql, flags=re.DOTALL)
-    if sql.lower().startswith("sql"):
-        sql = sql[3:].strip()
+    print(f"✅ Final SQL: {sql}")
     return sql
+
 
 # ------------------------
 # Run SQL safely
@@ -120,96 +102,93 @@ def run_sql_query(sql: str):
     with engine.connect() as conn:
         result = conn.execute(sql_text(sql))
         rows = result.fetchall()
-        return {"query": sql, "result": [dict(r._mapping) for r in rows]}
+        return {"query": sql, "result": [serialize_row(r) for r in rows]}
+
 
 # ------------------------
-# Save Training Data
+# Build final answer
 # ------------------------
-def save_training_example(question: str, sql: str, answer: str):
-    record = {"question": question, "sql": sql, "answer": answer}
-    path = "training_data.json"
-    data = []
-
-    # Load existing data if file exists
-    if os.path.exists(path):
-        with open(path, "r", encoding="utf-8") as f:
-            try:
-                data = json.load(f)
-            except json.JSONDecodeError:
-                data = []
-
-    # Skip if question already exists
-    for d in data:
-        if d["question"].strip().lower() == question.strip().lower():
-            print(f"⚠️ Skipping duplicate question: {question}")
-            return "Skipped (duplicate)"
-
-    # Append new record
-    data.append(record)
-
-    # Save updated dataset
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
-
-    # Retrain model
-    from train_model import train_sql_model  # import inside to avoid circular import
-    train_sql_model()
-
-    print(f"✅ Added new training example and retrained model: {question}")
-    return "Saved & retrained"
-
-# ------------------------
-# Build final answer prompt
-# ------------------------
-def build_prompt(question: str, sql_meta: dict) -> str:
+def build_prompt(question: str, sql_meta: dict) -> list:
     parts = []
-    parts.append("You are an assistant that answers user questions using the provided SQL results.")
+    parts.append("You are an assistant that answers based strictly on SQL results.")
     parts.append(f"Question: {question}")
-    if sql_meta and sql_meta.get("query"):
-        parts.append("SQL Query executed:")
-        parts.append(sql_meta["query"])
+
     if sql_meta and sql_meta.get("result") is not None:
         parts.append("SQL Result (rows):")
         parts.append(json.dumps(sql_meta["result"], indent=2))
-    parts.append("Provide a short, clear answer based strictly on the SQL results.")
-    parts.append("If no results, say 'No data found.'")
-    parts.append("Do not make up information not in the results.")
-    parts.append("if there was an error executing the SQL, give a generic error message. 'No data found.'")
-    parts.append('if results is in list of dicts format, format the answer as a markdown in html table.')
-    parts.append("Use HTML <br> for line breaks if needed.")
-    parts.append("Do not use based on data from the database. or refer to the database.")
-    parts.append("Do not mention the SQL query or results in your answer.")
-    parts.append("Do not add ```html tags around the table.")
-    return "\n\n".join(parts)
+    else:
+        parts.append(f"Error: {sql_meta.get('error')}")
+
+    parts.append(
+        "Rules:\n"
+        "- Provide a short, clear answer.\n"
+        "- If rows exist, return them as an HTML <table>.\n"
+        "- If no results, say 'No data found.'\n"
+        "- Do not fabricate or guess beyond the SQL results.\n"
+        "- Use <br> for line breaks if needed.\n"
+    )
+
+    return [{"role": "user", "content": "\n\n".join(parts)}]
+
 
 # ------------------------
-# Main answer function
+# Main pipeline
 # ------------------------
 def answer_question(question: str):
+    print(f"❓ User asked: {question}")
     sql_meta = None
-    sql_used = None
-
     try:
-        # 1. Try local NLP model first
-        sql_pred, confidence = predict_sql_local(question)
-        if sql_pred and confidence > 0.6:  # threshold
-            sql_used = sql_pred
-        else:
-            sql_used = generate_sql_with_gemini(question)
-
-        # 2. Run SQL
-        sql_meta = run_sql_query(sql_used)
-
+        sql = generate_sql_with_openai(question)
+        sql_meta = run_sql_query(sql)
     except Exception as e:
         sql_meta = {"error": str(e)}
 
-    # 3. Build final answer prompt
-    prompt = build_prompt(question, sql_meta)
-    llm_response = call_gemini_system(prompt)
+    # Generate natural language answer
+    messages = build_prompt(question, sql_meta)
+    completion = client.chat.completions.create(model=BASE_MODEL, messages=messages, temperature=0)
+    answer = completion.choices[0].message.content.strip()
 
-    # 4. Save training data
-    if sql_meta and sql_meta.get("query") and sql_meta.get("result"):
-        save_training_example(question, sql_meta["query"], llm_response)
+    return answer, {"sql_meta": sql_meta}
 
-    meta = {"sql_meta": sql_meta}
-    return llm_response, meta
+def serialize_row(row):
+    """
+    Convert row values to JSON-serializable types and auto-generate user-friendly labels.
+    """
+    new_row = {}
+    for k, v in row._mapping.items():
+        label = to_friendly_label(k)  # automatically generate friendly label
+        new_row[label] = float(v) if isinstance(v, Decimal) else v
+    return new_row
+
+# Dictionary of common columns → human-friendly names
+COLUMN_PREDICTIONS = {
+    "avg_salary": "Average Salary",
+    "salary": "Salary",
+    "dept": "Department",
+    "department": "Department",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "city": "City",
+    "project_name": "Project Name",
+    "employee_id": "Employee ID",
+    "hire_date": "Hire Date",
+    "manager_id": "Manager ID",
+    # Add more common patterns if needed
+}
+
+def to_friendly_label(col_name):
+    """Convert DB column name to human-readable label using prediction dictionary."""
+    col_lower = col_name.lower()
+    if col_lower in COLUMN_PREDICTIONS:
+        return COLUMN_PREDICTIONS[col_lower]
+    # fallback: convert snake_case → Title Case
+    return col_name.replace("_", " ").title()
+
+# Manual test
+if __name__ == "__main__":
+    q = "List all cities where HR employees live"
+    ans, meta = answer_question(q)
+    print("---- Answer ----")
+    print(ans)
+    print("---- Meta ----")
+    print(meta)
